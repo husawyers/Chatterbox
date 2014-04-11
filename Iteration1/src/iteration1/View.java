@@ -8,6 +8,8 @@ import java.awt.HeadlessException;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFrame;
 
 /**
@@ -18,13 +20,13 @@ public class View extends JFrame {
 
     public View() {
         super();
-        
+
         setTitle("Chatterbox");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(400, 400);
         setVisible(true);
     }
-    
+
     /**
      * @param args the command line arguments
      */
@@ -33,21 +35,31 @@ public class View extends JFrame {
         View view = new View();
         Model model = new Model();
         Controller controller = new Controller();
-        
+
         /*
-        // Test
-        BufferedImage image = model.testImage();
-        PhonemeAnimation animation = new PhonemeAnimation(image);
-        view.getContentPane().add(animation);
-        view.show();
-        */
+         // Test
+         BufferedImage image = model.testImage();
+         PhonemeAnimation animation = new PhonemeAnimation(image);
+         view.getContentPane().add(animation);
+         view.show();
+         */
         // Test 2
-        String word = controller.ask();
-        ArrayList<BufferedImage> images = model.processInput(word);
-        PhonemeAnimation animation = new PhonemeAnimation(images);
-        Thread thread = new Thread(animation);
-        thread.start();
+        PhonemeAnimation animation = new PhonemeAnimation();
         view.getContentPane().add(animation);
         view.show();
+
+        while (true) {
+            String word = "";
+            while (true) {
+                if (animation.done()) { // Works the second time round with Thread.sleep()/Debug mode
+                    word = controller.ask();
+                    break;
+                }
+            }
+            ArrayList<BufferedImage> images = model.processInput(word);
+            animation.init(images);
+            Thread thread = new Thread(animation);
+            thread.start();
+        }
     }
 }

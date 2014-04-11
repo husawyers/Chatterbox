@@ -22,29 +22,39 @@ import javax.swing.JPanel;
  */
 public class PhonemeAnimation extends JPanel implements Runnable {
 
-    private BufferedImage image;
     private ArrayList<BufferedImage> images;
     private int frame;
     
-    public PhonemeAnimation(BufferedImage image) {
+    public PhonemeAnimation() {
         super();
         setVisible(true);
         
-        this.image = image;
+        this.images = null;
+        frame = 0;
     }
     
-    public PhonemeAnimation(ArrayList<BufferedImage> images) {
-        super();
-        setVisible(true);
-        
+    public void init(ArrayList<BufferedImage> images) {
         this.images = images;
         frame = 0;
+    }
+    
+    public boolean done()
+    {
+        //System.out.println("yo");
+        
+        if(this.images == null)
+            return true;
+        
+        return frame >= images.size();
     }
 
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        g.drawImage(images.get(frame++), 0, 0, null);
+        if(this.images != null)
+        {
+            g.drawImage(images.get(frame++), 0, 0, null);
+        }
     }
 
     @Override
