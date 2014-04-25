@@ -21,7 +21,7 @@ public class View extends JFrame {
     public View() {
         super();
 
-        setTitle("Chatterbox");
+        setTitle("Chatterboxy");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(400, 400);
         setVisible(true);
