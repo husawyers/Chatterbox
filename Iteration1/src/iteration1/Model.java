@@ -4,13 +4,14 @@
  */
 package iteration1;
 
-import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.imageio.ImageIO;
 import javax.swing.JOptionPane;
 
@@ -54,7 +55,6 @@ public class Model {
         ArrayList<BufferedImage> tempImages = new ArrayList<>();
         for (int i = 0; i < input.length(); i++) {
             char c = input.charAt(i);
-            boolean found = false;
 
             // " ", forming "m"
             if (c == ' ') {
@@ -80,13 +80,17 @@ public class Model {
                 continue;
             }
 
-            // "e"
+            // "e" or "eee"
             if (c == 'e') {
-                    tempImages.add(images.get("e.png"));
+                if(i+1 < input.length() && (input.charAt(i+1) == 'e' || input.charAt(i+1) == 'y'))
+                {
+                    tempImages.add(images.get("eee.png"));
                     continue;
+                }
+                tempImages.add(images.get("e.png"));
+                continue;
             }
-            // WIP - eee
-
+            
             // "f"
             if (c == 'f') {
                 tempImages.add(images.get("f.png"));
@@ -104,56 +108,68 @@ public class Model {
                 tempImages.add(images.get("i.png"));
                 continue;
             }
-            
+
             // "l"
             if (c == 'l') {
                 tempImages.add(images.get("l.png"));
                 continue;
             }
-            
+
             // "m"
             if (c == 'm') {
                 tempImages.add(images.get("m.png"));
                 continue;
             }
-            
-            // "o"
+
+            // "o" or "oh!"
             if (c == 'o') {
+                if(i-1 > -1 && input.charAt(i-1) == 'h' &&
+                        i+1 < input.length() && input.charAt(i+1) == 'l')
+                {
+                    tempImages.add(images.get("oh!.png"));
+                    continue;
+                }
                 tempImages.add(images.get("oooh.png"));
                 continue;
             }
-            // WIP - oh!
-            
+
             // "p"
             if (c == 'p') {
                 tempImages.add(images.get("p.png"));
                 continue;
             }
-            
+
             // "s"
             if (c == 's') {
                 tempImages.add(images.get("s.png"));
                 continue;
             }
-            
+
             // "u"
             if (c == 'u') {
                 tempImages.add(images.get("u.png"));
                 continue;
             }
-            
+
             // "v"
             if (c == 'v') {
                 tempImages.add(images.get("v.png"));
                 continue;
             }
-            
+
             // "w"
             if (c == 'w') {
                 tempImages.add(images.get("w.png"));
                 continue;
             }
-            
+
+            // punctuation
+            Pattern p = Pattern.compile("1|2|3|4|5|6|7|8|9|0|\\!|\\?|\\'|\\,|//.");
+            Matcher m = p.matcher("" + c);
+            if (m.find()) {
+                continue;
+            }
+
             // consonants
             tempImages.add(images.get("consonants.png"));
         }
@@ -162,9 +178,5 @@ public class Model {
         tempImages.add(images.get("m.png"));
 
         return tempImages;
-    }
-
-    public BufferedImage testImage() {
-        return images.get("ess ssss stum dee gee eeem consonants.png");
     }
 }

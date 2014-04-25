@@ -33,19 +33,9 @@ public class PhonemeAnimation extends JPanel implements Runnable {
         frame = 0;
     }
     
-    public void init(ArrayList<BufferedImage> images) {
+    public void initialize(ArrayList<BufferedImage> images) {
         this.images = images;
         frame = 0;
-    }
-    
-    public boolean done()
-    {
-        //System.out.println("yo");
-        
-        if(this.images == null)
-            return true;
-        
-        return frame >= images.size();
     }
 
     @Override
@@ -62,7 +52,8 @@ public class PhonemeAnimation extends JPanel implements Runnable {
         while(frame < images.size())
         {
             try {
-                repaint(); System.out.println(frame);
+                repaint();
+                //System.out.println(frame);
                 Thread.sleep(300);
             } catch (InterruptedException ex) {
                 Logger.getLogger(PhonemeAnimation.class.getName()).log(Level.SEVERE, null, ex);
