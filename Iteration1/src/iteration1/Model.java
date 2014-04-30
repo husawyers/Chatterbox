@@ -163,10 +163,11 @@ public class Model {
                 continue;
             }
 
-            // punctuation
-            Pattern p = Pattern.compile("1|2|3|4|5|6|7|8|9|0|\\!|\\?|\\'|\\,|//.");
+            // punctuation, forming "m"
+            Pattern p = Pattern.compile("1|2|3|4|5|6|7|8|9|0|\\!|\\?|\\'|\\,|//.|-");
             Matcher m = p.matcher("" + c);
             if (m.find()) {
+                tempImages.add(images.get("m.png"));
                 continue;
             }
 
