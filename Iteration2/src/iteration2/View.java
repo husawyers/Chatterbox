@@ -87,7 +87,7 @@ public class View extends JFrame {
         
         TextToSpeech speech = new TextToSpeech();
 
-        String strings[] = new String[]{"hello", "no", "yes", "can I", "uh", "do you", "kill me", "please"};
+        String strings[] = new String[]{"hello", "no", "yes", "can I", "uh", "do you", "please"};
         Random r = new Random();
         while (true) {
             // Get word
@@ -101,7 +101,7 @@ public class View extends JFrame {
             // Start speech
             speech.speak(word);
 
-            while (!animation.isFinished()) {
+            while (thread.isAlive()) {
             }
         }
     }

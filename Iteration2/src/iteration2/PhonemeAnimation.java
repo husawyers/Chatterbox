@@ -24,7 +24,6 @@ public class PhonemeAnimation extends JPanel implements Runnable {
 
     private ArrayList<BufferedImage> images;
     private int frame;
-    private boolean finished;
     
     public PhonemeAnimation() {
         super();
@@ -60,12 +59,5 @@ public class PhonemeAnimation extends JPanel implements Runnable {
                 Logger.getLogger(PhonemeAnimation.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        
-        // Signal when the animation is finished
-        finished = true;
-    }
-
-    public boolean isFinished() {
-        return finished;
     }
 }
