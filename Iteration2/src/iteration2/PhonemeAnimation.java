@@ -41,6 +41,7 @@ public class PhonemeAnimation extends JPanel implements Runnable {
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
+        // If there are images to be animated, then draw the current frame
         if(this.images != null)
         {
             g.drawImage(images.get(frame++), 0, 0, null);
@@ -49,6 +50,7 @@ public class PhonemeAnimation extends JPanel implements Runnable {
 
     @Override
     public void run() {
+        // Iterate through the animation images to be drawn
         while(frame < images.size())
         {
             try {

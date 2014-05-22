@@ -22,14 +22,13 @@ public class TextToSpeech {
 
     public TextToSpeech() {
         voiceName = "kevin";
-        this.text = text;
+        text = "";
+        voice = null;
         
         // Initialize TTS
-        voice = null;
         VoiceManager voiceManager = VoiceManager.getInstance();
         voice = voiceManager.getVoice(voiceName);
-        // Loads the voice
-        voice.allocate();
+        voice.allocate(); // Loads the voice
         
         /*try {
             Thread.sleep(1000);

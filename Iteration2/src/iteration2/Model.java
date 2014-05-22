@@ -24,11 +24,13 @@ import javax.swing.JOptionPane;
 public class Model {
 
     private Map<String, BufferedImage> images;
-
+    private TextToSpeech tts;
+    
     public Model() {
-        // Initialize
         images = new HashMap<>();
+        tts = new TextToSpeech();
 
+        // Initialize phoneme images
         File directory[] = new File("resources").listFiles();
         for (File file : directory) {
             images.put(file.getName(), loadImage(file));
@@ -187,5 +189,10 @@ public class Model {
         }*/
 
         return tempImages;
+    }
+    
+    public void textToSpeech(String word)
+    {
+        tts.speak(word);
     }
 }
