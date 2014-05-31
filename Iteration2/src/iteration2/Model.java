@@ -25,10 +25,15 @@ public class Model {
 
     private Map<String, BufferedImage> images;
     private TextToSpeech tts;
+    private PhonemeAnimation animation;
     
-    public Model() {
+    public Model(View view) {
         images = new HashMap<>();
         tts = new TextToSpeech();
+        animation = new PhonemeAnimation();
+        // Add the animation JPanel to the frontend JFrame
+        view.getContentPane().add(animation);
+        view.show();
 
         // Initialize phoneme images
         File directory[] = new File("resources").listFiles();
@@ -86,12 +91,15 @@ public class Model {
 
             // "e" or "eee"
             if (c == 'e') {
+                // "ee" or "ey", forming "(eee)e" or "(eee)y"
                 if(i+1 < input.length() && (input.charAt(i+1) == 'e' || input.charAt(i+1) == 'y'))
                 {
                     tempImages.add(images.get("eee.png"));
-                    continue;
                 }
-                tempImages.add(images.get("e.png"));
+                else
+                {
+                    tempImages.add(images.get("e.png"));
+                }
                 continue;
             }
             
@@ -127,13 +135,16 @@ public class Model {
 
             // "o" or "oh!"
             if (c == 'o') {
+                // "hol", forming "h(oh!)l"
                 if(i-1 > -1 && input.charAt(i-1) == 'h' &&
                         i+1 < input.length() && input.charAt(i+1) == 'l')
                 {
                     tempImages.add(images.get("oh!.png"));
-                    continue;
                 }
-                tempImages.add(images.get("oooh.png"));
+                else
+                {
+                    tempImages.add(images.get("oooh.png"));
+                }
                 continue;
             }
 
@@ -167,7 +178,7 @@ public class Model {
                 continue;
             }
 
-            // punctuation, forming "m"
+            // numbers/punctuation, NOT HANDLED forming "m"
             Pattern p = Pattern.compile("1|2|3|4|5|6|7|8|9|0|\\!|\\?|\\'|\\,|//.|-");
             Matcher m = p.matcher("" + c);
             if (m.find()) {
@@ -194,5 +205,17 @@ public class Model {
     public void textToSpeech(String word)
     {
         tts.speak(word);
+    }
+    
+    public Thread imagesToPhonemes(ArrayList<BufferedImage> images)
+    {
+        animation.initialize(images);
+        
+        // Start the mouth phoneme animation 
+        Thread thread = new Thread(animation);
+        thread.start();
+        
+        // Return a reference to the thread so you can check isAlive on the frontend
+        return thread;
     }
 }

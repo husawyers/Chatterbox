@@ -33,8 +33,8 @@ public class View extends JFrame {
      */
     public static void main(String[] args) {
         // Initialize
-        Model model = new Model();
         View view = new View();
+        Model model = new Model(view);
         Controller controller = new Controller();
 
         /*
@@ -81,26 +81,18 @@ public class View extends JFrame {
          }
          */
         // Test 4
-        PhonemeAnimation animation = new PhonemeAnimation(); // Could be accessed from the Model
-        view.getContentPane().add(animation);
-        view.show();
-        
-        // Randomly slect a word to turn into speech/mouth phonemes
         String strings[] = new String[]{"hello", "no", "yes", "can I", "uh", "do you", "please"};
         Random r = new Random();
         while (true) {
-            // Get word
+            // Get a random word
             String word = strings[r.nextInt(strings.length)];
-            // Initialize mouth phonemes
-            ArrayList<BufferedImage> images = model.processInput(word);
-            animation.initialize(images);
             // Start mouth phonemes
-            Thread thread = new Thread(animation);
-            thread.start();
-            // Start speech
+            ArrayList<BufferedImage> images = model.processInput(word);
+            Thread threadRef = model.imagesToPhonemes(images);
+            // Start speech AFTER PHONEMES because it syncs fairly well
             model.textToSpeech(word);
 
-            while (thread.isAlive()) {
+            while (threadRef.isAlive()) {
             }
         }
     }

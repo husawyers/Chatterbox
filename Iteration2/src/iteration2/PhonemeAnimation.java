@@ -41,10 +41,11 @@ public class PhonemeAnimation extends JPanel implements Runnable {
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
+        
         // If there are images to be animated, then draw the current frame
         if(this.images != null)
         {
-            g.drawImage(images.get(frame++), 0, 0, null);
+            g.drawImage(images.get(frame++), 130, 130, null); // centre ~= (400 - 128) / 2 OR 136
         }
     }
 
