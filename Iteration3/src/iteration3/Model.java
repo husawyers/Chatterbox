@@ -40,6 +40,8 @@ public class Model {
         for (File file : directory) {
             images.put(file.getName(), loadImage(file));
         }
+        // Set the face
+        animation.setFace(images.get("face.png"));
     }
 
     private BufferedImage loadImage(File file) {
@@ -201,8 +203,8 @@ public class Model {
             Logger.getLogger(Model.class.getName()).log(Level.SEVERE, null, ex);
         }*/
 
-        // Pass images to be animated
-        animation.initialize(tempImages);
+        // Set the phonemes
+        animation.setPhonemes(tempImages);
         // Start the mouth phoneme animation 
         Thread thread = new Thread(animation);
         thread.start();
@@ -217,16 +219,7 @@ public class Model {
     
     public String generateReply(String input)
     {
-        //return "Alright";
-        
-        if(input.contains("name"))
-        {
-            return "My name is chatterbox";
-        }
-        if(input.contains("?"))
-        {
-            return "I don't know";
-        }
-        return "I don't understand";
+        // Language level: Parrot
+        return input;
     }
 }

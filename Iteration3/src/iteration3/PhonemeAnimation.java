@@ -23,6 +23,7 @@ import javax.swing.JPanel;
 public class PhonemeAnimation extends JPanel implements Runnable {
 
     private ArrayList<BufferedImage> images;
+    private BufferedImage face;
     private int frame;
     
     public PhonemeAnimation() {
@@ -30,10 +31,15 @@ public class PhonemeAnimation extends JPanel implements Runnable {
         setVisible(true);
         
         this.images = null;
+        face = null;
         frame = 0;
     }
     
-    public void initialize(ArrayList<BufferedImage> images) {
+    public void setFace(BufferedImage image) {
+        face = image;
+    }
+    
+    public void setPhonemes(ArrayList<BufferedImage> images) {
         this.images = images;
         frame = 0;
     }
@@ -45,7 +51,8 @@ public class PhonemeAnimation extends JPanel implements Runnable {
         // If there are images to be animated, then draw the current frame
         if(this.images != null)
         {
-            g.drawImage(images.get(frame++), 130, 130, null); // centre ~= (400 - 128) / 2 OR 136
+            g.drawImage(images.get(frame++), 134, 160, null); // centre ~= (400 - 128) / 2 OR 136
+            g.drawImage(face, 0, 0, null);
         }
     }
 
