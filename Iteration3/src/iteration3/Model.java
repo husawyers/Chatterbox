@@ -9,6 +9,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -219,7 +220,39 @@ public class Model {
     
     public String generateReply(String input)
     {
-        // Language level: Parrot
-        return input;
+//        // Language level: Parrot
+//        return input;
+        
+        // Language level: Bag of words
+        String words[] = input.split(" ");
+        Map bag = new HashMap();
+        for (String word : words) {
+            Object get = bag.get(word);
+            
+            if(get == null)
+            {
+                bag.put(word, 1);
+            }
+            else
+            {
+                bag.put(word, ((int)bag.get(word))+1);
+            }
+        }
+        
+        // Return most occured word
+        String maxKey = "";
+        int maxValue = 0;
+        for(Object key : bag.keySet())
+        {
+            Object value = bag.get(key);
+            
+            if((int)value > maxValue)
+            {
+                maxKey = (String)key;
+                maxValue = (int)value;
+            }
+        }
+        
+        return maxKey;
     }
 }

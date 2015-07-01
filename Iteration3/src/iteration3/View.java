@@ -31,25 +31,45 @@ public class View extends JFrame {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         // Initialize
         View view = new View();
         Model model = new Model(view);
         Controller controller = new Controller();
-
+        
         // Run
+        ArrayList<String> wordQueue = new ArrayList<>();
+        Thread threadRef = null;
         while(true)
         {
-            String input = controller.ask("Input a message (or Q to quit): ");
-            if(input.equalsIgnoreCase("Q"))
+            // If the AI has no more words to say, they ask for more input
+            String input = "";
+            String reply = "";
+            if(wordQueue.isEmpty())
             {
-                System.exit(0);
+                input = controller.ask("Input a message (or Q to quit): ").toLowerCase();
+                
+                if(input.equals("q"))
+                {
+                    System.exit(0);
+                }
+                
+                reply = model.generateReply(input);
+                
+                String words[] = reply.split(" ");
+                for (String word : words) {
+                    wordQueue.add(word);
+                }
             }
             
-            String reply = model.generateReply(input);
-            
-            Thread threadRef = model.inputToPhonemes(reply);
-            model.textToSpeech(reply); // HACK: Start speech after phonemes to sync them (works for 1-2 words)
+            // Make sure each word is spoken before moving to the next, for sync
+            if(threadRef == null || !threadRef.isAlive())
+            {
+                threadRef = model.inputToPhonemes(wordQueue.get(0));
+                model.textToSpeech(wordQueue.get(0));
+                
+                wordQueue.remove(0);
+            }
         }
     }
 }
