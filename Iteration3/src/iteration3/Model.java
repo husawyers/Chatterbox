@@ -4,6 +4,9 @@
  */
 package iteration3;
 
+import iteration3.phonetics.TextToSpeech;
+import iteration3.phonetics.PhonemeAnimation;
+import iteration3.semantics.Response;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -27,11 +30,13 @@ public class Model {
     private Map<String, BufferedImage> images;
     private TextToSpeech tts;
     private PhonemeAnimation animation;
+    private Response response;
     
     public Model(View view) {
         images = new HashMap<>();
         tts = new TextToSpeech();
         animation = new PhonemeAnimation();
+        response = new Response();
         // Add the animation JPanel to the frontend JFrame
         view.getContentPane().add(animation);
         view.show();
@@ -220,39 +225,6 @@ public class Model {
     
     public String generateReply(String input)
     {
-//        // Language level: Parrot
-//        return input;
-        
-        // Language level: Bag of words
-        String words[] = input.split(" ");
-        Map bag = new HashMap();
-        for (String word : words) {
-            Object get = bag.get(word);
-            
-            if(get == null)
-            {
-                bag.put(word, 1);
-            }
-            else
-            {
-                bag.put(word, ((int)bag.get(word))+1);
-            }
-        }
-        
-        // Return most occured word
-        String maxKey = "";
-        int maxValue = 0;
-        for(Object key : bag.keySet())
-        {
-            Object value = bag.get(key);
-            
-            if((int)value > maxValue)
-            {
-                maxKey = (String)key;
-                maxValue = (int)value;
-            }
-        }
-        
-        return maxKey;
+        return response.generateResponse(input);
     }
 }

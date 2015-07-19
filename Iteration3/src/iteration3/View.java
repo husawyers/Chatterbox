@@ -47,12 +47,7 @@ public class View extends JFrame {
             String reply = "";
             if(wordQueue.isEmpty())
             {
-                input = controller.ask("Input a message (or Q to quit): ").toLowerCase();
-                
-                if(input.equals("q"))
-                {
-                    System.exit(0);
-                }
+                input = controller.ask("Input a message (or BYE to quit): ").toLowerCase();
                 
                 reply = model.generateReply(input);
                 

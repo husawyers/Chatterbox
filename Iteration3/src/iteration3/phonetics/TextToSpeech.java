@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package iteration3;
+package iteration3.phonetics;
 
 import com.sun.speech.freetts.Voice;
 import com.sun.speech.freetts.VoiceManager;
