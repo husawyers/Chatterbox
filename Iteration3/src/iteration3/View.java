@@ -38,14 +38,13 @@ public class View extends JFrame {
         Controller controller = new Controller();
         
         // Run
-        ArrayList<String> wordQueue = new ArrayList<>();
         Thread threadRef = null;
         while(true)
         {
             // If the AI has no more words to say, they ask for more input
             String input = "";
             String reply = "";
-            if(wordQueue.isEmpty())
+            if(model.getWordQueue().isEmpty())
             {
                 input = controller.ask("Input a message (or BYE to quit): ").toLowerCase();
                 
@@ -53,17 +52,17 @@ public class View extends JFrame {
                 
                 String words[] = reply.split(" ");
                 for (String word : words) {
-                    wordQueue.add(word);
+                    model.getWordQueue().add(word);
                 }
             }
             
             // Make sure each word is spoken before moving to the next, for sync
             if(threadRef == null || !threadRef.isAlive())
             {
-                threadRef = model.inputToPhonemes(wordQueue.get(0));
-                model.textToSpeech(wordQueue.get(0));
+                threadRef = model.textToPhonemes(model.getWordQueue().get(0));
+                model.textToSpeech(model.getWordQueue().get(0));
                 
-                wordQueue.remove(0);
+                model.getWordQueue().remove(0);
             }
         }
     }
