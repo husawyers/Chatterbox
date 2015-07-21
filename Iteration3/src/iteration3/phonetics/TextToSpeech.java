@@ -18,7 +18,7 @@ import java.util.logging.Logger;
 public class TextToSpeech {
     private final String voiceName;
     private String text;
-    Voice voice;
+    public static Voice voice;
 
     public TextToSpeech() {
         voiceName = "kevin";
@@ -35,6 +35,11 @@ public class TextToSpeech {
         } catch (InterruptedException ex) {
             Logger.getLogger(TextToSpeech.class.getName()).log(Level.SEVERE, null, ex);
         }*/
+    }
+    
+    public static void dispose()
+    {
+        voice.deallocate();
     }
     
     public void speak(String text)

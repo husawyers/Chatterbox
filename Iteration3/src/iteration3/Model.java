@@ -84,6 +84,9 @@ public class Model {
             for (int i = newWords.length-1; i >= 0; i--) {
                 wordQueue.add(0, newWords[i]);
             }
+            
+            // Set the first word to be the next to be processed
+            input = wordQueue.get(0);
         } catch (NumberFormatException e) {
             // Nothing to do...
         }
@@ -209,7 +212,7 @@ public class Model {
                 continue;
             }
 
-            // consonants
+            // Other consonants
             tempImages.add(images.get("consonants.png"));
         }
 
@@ -401,8 +404,11 @@ public class Model {
 
         answer += convert;
         convert = "";
-        if (ones > 0) {
+        if (ones >= 0) {
             switch (ones) {
+                case 0:
+                    if(thousands == 0 && hundreds == 0 && tens == 0) convert = "zero";
+                    break;
                 case 1:
                     convert = "one";
                     break;
