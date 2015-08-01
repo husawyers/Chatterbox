@@ -89,7 +89,7 @@ public class Response {
             int answer = (int) Double.parseDouble(tempAttribute);
             answer -= 273.15;
 
-            responses.put(new String("weather"), new String[]{weatherAttribute + " at" + answer + " degrees celsius"});
+            responses.put(new String("weather"), new String[]{answer + " degrees celsius " + weatherAttribute});
         } catch (Exception ex) {
             Logger.getLogger(Response.class.getName()).log(Level.SEVERE, null, ex);
         }
